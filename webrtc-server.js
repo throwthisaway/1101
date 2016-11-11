@@ -230,12 +230,12 @@ wss.on('connection', function (ws) {
         if (client.session) {
             let session = client.session;
             session.broadcastStringToSession(client, 'KILL' + client.id);
-            console.log(">>>>>KILL + " + client.id);
+            console.log((new Date()) + ">>>>>KILL + " + client.id);
             session.removeClient(client);
             // check for other client to reset control
             if (client.otherId) {
                 session.broadcastStringToSession(client, 'KILL' + client.otherId);
-                console.log(">>>>>KILL + " + client.otherId);
+                console.log((new Date()) + ">>>>>KILL + " + client.otherId);
                 let clientToResetCtrl;
                 if (clientToResetCtrl = session.findClientByID(client.otherId)) {
                     clientToResetCtrl.ctrl = 0;
