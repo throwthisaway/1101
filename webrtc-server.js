@@ -200,36 +200,6 @@ wss.on('connection', function (ws) {
         if (client.session) {
             let session = client.session;
             session.broadcastStringToSession(client, 'KILL' + client.id);
-            console.log(">>>>>KILL + " + client.id);
-            session.removeClient(client);
-            // check for other client to reset control
-            if (client.otherId) {
-                session.broadcastStringToSession(client, 'KILL' + client.otherId);
-                console.log(">>>>>KILL + " + client.otherId);
-                let clientToResetCtrl;
-                if (clientToResetCtrl = session.findClientByID(client.otherId)) {
-                    clientToResetCtrl.ctrl = 0;
-                }
-            }
-            if (session.clients.length < 1) {
-                delete sessions.delete(session.id);
-                debug.Log('deleting session: ' + session.id + ' session count: ' + sessions.size);
-            }
-            else if (session.clients.length < minPlayers)
-                session.broadcastStringToSession(null, 'WAIT' + (minPlayers - session.clients.length));
-        }
-        //debugOut('Client disconnected, count ' + clients.size + ' ' + code + ' ' + message);
-    });
-    ws.on('error', function (code) {
-        for (var [key, value] of RTCClients.entries()) {
-            if (value === ws) {
-                close(client, key);
-                break;
-            }
-        }
-        if (client.session) {
-            let session = client.session;
-            session.broadcastStringToSession(client, 'KILL' + client.id);
             console.log((new Date()) + ">>>>>KILL + " + client.id);
             session.removeClient(client);
             // check for other client to reset control
