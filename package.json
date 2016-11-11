@@ -1,12 +1,26 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
-  "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
+  "name": "Prototype-1101",
+  "version": "0.1.0",
+  "description": "Experimental fast protoyping of emscripten-webgl assymetric multiplayer deathmatch",
+  "engines": {
+    "node": ">= 5.5.0",
+    "npm": ">= 1.0.0"
+  },
+  "dependencies": {
+    "express": "^4.10.2",
+    "ws": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.34",
+    "@types/express": "^4.0.33",
+    "@types/node": "^6.0.46",
+    "@types/ws": "0.0.35"
+  },
+  "bundleDependencies": [],
+  "author": "Andras Kovacs <throwthisaway@outlook.hu>",
   "private": true,
-  "main": "start.js",
+  "main": "server.js",
   "scripts": {
     "start": "node --use_strict start.js"
-  },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
-  "license": "ISC"
+  }
 }
