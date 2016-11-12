@@ -212,8 +212,19 @@ var WebRTCPeer = function () {
             cpp && cpp.OnClose();
         },
         send: function (data) {
+            var toClose = [];
             for (var client of connections.values()) {
-                client.send(data);
+                try{
+                    client.send(data);
+                } catch(err) {
+                    console.log('RTC unexpectedly closed: ' + err.message);
+                    client.close();
+                    toClose.push(client.remoteID);
+                }
+            }
+            for (var remoteID of toClose) {
+                connections.delete(remoteID);
+                console.log("RTC deleted " + remoteID + " " + connections.size() );
             }
         },
         wsSend: function (data) {
