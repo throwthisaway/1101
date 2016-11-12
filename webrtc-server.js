@@ -137,7 +137,7 @@ function handleSessionStringMessage(client, message) {
 function close(client) {
     for (var [remoteID, ws] of RTCClients.entries()) {
         if (ws === client.ws) {
-            RTCClients.delete(remoteID);
+            delete RTCClients.delete(remoteID);
             client.session.broadcastToSession(client, JSON.stringify({ 'close': remoteID }));
             break;
         }
@@ -163,6 +163,7 @@ function close(client) {
         else if (session.clients.length < minPlayers)
             session.broadcastStringToSession(null, 'WAIT' + (minPlayers - session.clients.length));
     }
+    client.close();
     //debugOut('Client disconnected, count ' + clients.size + ' ' + code + ' ' + message);
 }
 // {'connect': '7fea5'}
@@ -185,22 +186,22 @@ let pingId = setInterval(function () {
     for (var [sessionID, session] of sessions) {
         for (var client of session.clients) {
             if (!client.alive) {
-                debug.Log("ToClose " + client.id);
+                // debug.Log("ToClose " + client.id);
                 clientsToClose.push(client);
             }
             else {
-                debug.Log("wasalive " + client.id);
+                //debug.Log("wasalive " + client.id);
                 client.alive = false;
             }
         }
-        debug.Log("session " + session.clients.length);
+        // debug.Log("session " + session.clients.length);
         session.broadcastToSession(null, JSON.stringify({ 'ping': 'ping' }));
     }
     for (var client of clientsToClose) {
         debug.Log('Closing ' + client.id);
         close(client);
     }
-}, 1000);
+}, 500);
 wss.on('connection', function (ws) {
     let client = new Session_1.Client(ws);
     ws.on('message', function (message, flags) {
