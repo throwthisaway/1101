@@ -9,7 +9,7 @@ let app = Express();
 let server = http.createServer(app);
 let debug = new utils.Debug(true, false);
 let rootPath = ''; //'/develop';
-let sessionIDLen = 5, minPlayers = 4, maxPlayers = 16, maxSessions = 8;
+let sessionIDLen = 5, clientIDLen = 5, minPlayers = 4, maxPlayers = 16, maxSessions = 8;
 let RTCClients = new Map();
 let sessions = new Map();
 // session handling
@@ -17,6 +17,11 @@ function getSessionIDFromMsg(msg) {
     if (msg.length < 4 + sessionIDLen)
         return undefined;
     return msg.substr(4, sessionIDLen);
+}
+function getClientIDFromMsg(msg) {
+    if (msg.length < 4 + clientIDLen)
+        return undefined;
+    return msg.substr(4, clientIDLen);
 }
 function findAvailableSessionID() {
     let res = null;
@@ -128,10 +133,14 @@ function handleSessionStringMessage(client, message) {
             session.broadcastStringToSession(null, 'WAIT0');
         return;
     }
-    if (client.session == undefined) {
-        console.log('Invalid session for ws client');
-        client.close();
-        return;
+    else if (message.indexOf('KILL') === 0) {
+        console.log("killing " + message);
+        var clientIDToKill = getClientIDFromMsg(message);
+        if (clientIDToKill) {
+            var clientToKill = client.session.findClientByID(clientIDToKill);
+            if (clientToKill)
+                clientToKill.close();
+        }
     }
 }
 function close(client) {
@@ -163,7 +172,6 @@ function close(client) {
         else if (session.clients.length < minPlayers)
             session.broadcastStringToSession(null, 'WAIT' + (minPlayers - session.clients.length));
     }
-    client.close();
     //debugOut('Client disconnected, count ' + clients.size + ' ' + code + ' ' + message);
 }
 // {'connect': '7fea5'}
@@ -181,12 +189,12 @@ else {
         server: server
     });
 }
-let pingId = setInterval(function () {
-    let clientsToClose = [];
+/*let pingId = setInterval(function(){
+    let clientsToClose : Client[] = [];
     for (var [sessionID, session] of sessions) {
         for (var client of session.clients) {
             if (!client.alive) {
-                // debug.Log("ToClose " + client.id);
+               // debug.Log("ToClose " + client.id);
                 clientsToClose.push(client);
             }
             else {
@@ -194,14 +202,14 @@ let pingId = setInterval(function () {
                 client.alive = false;
             }
         }
-        // debug.Log("session " + session.clients.length);
-        session.broadcastToSession(null, JSON.stringify({ 'ping': 'ping' }));
+       // debug.Log("session " + session.clients.length);
+        session.broadcastToSession(null, JSON.stringify({'ping': 'ping'}));
     }
     for (var client of clientsToClose) {
         debug.Log('Closing ' + client.id);
         close(client);
     }
-}, 500);
+}, 1000);*/
 wss.on('connection', function (ws) {
     let client = new Session_1.Client(ws);
     ws.on('message', function (message, flags) {
