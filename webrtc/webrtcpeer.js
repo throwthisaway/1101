@@ -200,6 +200,7 @@ var WebRTCPeer = function () {
                 debug.Log('ws-error ' + error);
             };
             ws.onclose = function(code, message){
+                console.log("WebSocket ws.onclose");
                 cpp && cpp.WSOnClose();
             },
             ws.onmessage = function (e) {
