@@ -18,7 +18,7 @@ cluster.on('disconnect', function(worker) {
 });
 
 if (cluster.isMaster) {
-  const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
+    const workerCount = 1;//process.env.NODE_CLUSTER_WORKERS || 4;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
     cluster.fork();
@@ -36,5 +36,6 @@ if (cluster.isMaster) {
     });
   }
 } else {
-  require('./app.js');
+  require('./webrtc-server.js');
 }
+
