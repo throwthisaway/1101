@@ -200,7 +200,7 @@ let pingId = setInterval(function () {
         debug.Log('Closing ' + client.id);
         close(client);
     }
-}, 1000);
+}, 3000);
 wss.on('connection', function (ws) {
     let client = new Session_1.Client(ws);
     ws.on('message', function (message, flags) {
