@@ -152,10 +152,10 @@ var WebRTCPeer = function () {
     var clientID;
     var cpp = null;
     var connections = new Map();
-
+    var i = 0;
     function onWSMessage(e) {
         var msg = JSON.parse(e.data);
-        console.log(msg);
+        console.log(msg + (++i));
         if (msg.session) {
             if (cpp) cpp.WSOnMessage(msg.session);
         } else if (msg.ping) {
