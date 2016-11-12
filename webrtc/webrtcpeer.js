@@ -155,8 +155,11 @@ var WebRTCPeer = function () {
 
     function onWSMessage(e) {
         var msg = JSON.parse(e.data);
+        console.log(msg);
         if (msg.session) {
             if (cpp) cpp.WSOnMessage(msg.session);
+        } else if (msg.ping) {
+            ws.send(JSON.stringify({'ping': 'pong'}));
         } else if (msg.connect) {
             var conn = createConnection(true);
             connections.set(msg.connect, conn);
