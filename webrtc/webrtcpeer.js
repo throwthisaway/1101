@@ -6,7 +6,7 @@ var debug = new Debug(true, true);
 var createConnection = function (initial) {
     var ws, remoteID, clientID;
     var recvSize = 0;
-    var conn, sendChannel, receiveChannel, servers = null, pcConstraint = null;
+    var conn, sendChannel, receiveChannel, servers = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]}, pcConstraint = null;
 
     function Connected() {
         if (sendChannel && sendChannel.readyState === 'open' &&
