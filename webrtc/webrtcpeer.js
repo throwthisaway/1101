@@ -2,7 +2,7 @@
 // TODO:: error handling
 // TODO:: close handling
 //chrome://webrtc-internals/
-var debug = new Debug(false, false);
+var debug = new Debug(true, true);
 var createConnection = function (initial) {
     var ws, remoteID, clientID;
     var recvSize = 0;
