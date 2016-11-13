@@ -7,7 +7,7 @@ let ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 let port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 let app = Express();
 let server = http.createServer(app);
-let debug = new utils.Debug(false, false);
+let debug = new utils.Debug(false, true);
 let rootPath = ''; //'/develop';
 let sessionIDLen = 5, clientIDLen = 5, minPlayers = 4, maxPlayers = 16, maxSessions = 8;
 let RTCClients = new Map();
