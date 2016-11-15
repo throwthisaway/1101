@@ -7,7 +7,7 @@ let ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 let port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 let app = Express();
 let server = http.createServer(app);
-let debug = new utils.Debug(false, true);
+let debug = new utils.Debug(false, false);
 let rootPath = ''; //'/develop';
 let sessionIDLen = 5, clientIDLen = 5, minPlayers = 4, maxPlayers = 16, maxSessions = 8;
 let RTCClients = new Map();
@@ -134,7 +134,7 @@ function handleSessionStringMessage(client, message) {
         return;
     }
     else if (message.indexOf('KILL') === 0) {
-        debug.Log("killing " + message);
+        console.log("killing " + message);
         var clientIDToKill = getClientIDFromMsg(message);
         if (clientIDToKill) {
             var clientToKill = client.session.findClientByID(clientIDToKill);
@@ -251,6 +251,7 @@ wss.on('connection', function (ws) {
         }
     });
     ws.on('close', function (code, message) {
+        console.log("ws-onclose");
         close(client);
     });
 });
