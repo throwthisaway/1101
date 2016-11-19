@@ -134,13 +134,7 @@ function handleSessionStringMessage(client, message) {
         return;
     }
     else if (message.indexOf('KILL') === 0) {
-        console.log("killing " + message);
-        var clientIDToKill = getClientIDFromMsg(message);
-        if (clientIDToKill) {
-            var clientToKill = client.session.findClientByID(clientIDToKill);
-            if (clientToKill)
-                clientToKill.close();
-        }
+        throw new Error("dfgtdfg");
     }
 }
 function close(client) {
@@ -251,7 +245,7 @@ wss.on('connection', function (ws) {
         }
     });
     ws.on('close', function (code, message) {
-        console.log("ws-onclose");
+        debug.Log("ws-onclose");
         close(client);
     });
 });
