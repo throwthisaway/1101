@@ -33,13 +33,15 @@ function findAvailableSessionID() {
 }
 function redirectToASession(res) {
     let id;
-    if (id = findAvailableSessionID()) {
-        console.log('found an existing session: ' + id);
-        res.redirect(rootPath + '/?p=' + id);
-    }
-    else if (sessions.size >= maxSessions) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('All sessions are full. Try again later.');
+    if (sessions.size >= maxSessions) {
+        if (id = findAvailableSessionID()) {
+            console.log('found an existing session: ' + id);
+            res.redirect(rootPath + '/?p=' + id);
+        }
+        else {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('All sessions are full. Try again later.');
+        }
     }
     else {
         function generateID(count) {
