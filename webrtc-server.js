@@ -134,7 +134,13 @@ function handleSessionStringMessage(client, message) {
         return;
     }
     else if (message.indexOf('KILL') === 0) {
-        throw new Error("dfgtdfg");
+        debug.Log("killing " + message);
+        var clientIDToKill = getClientIDFromMsg(message);
+        if (clientIDToKill) {
+            var clientToKill = client.session.findClientByID(clientIDToKill);
+            if (clientToKill)
+                clientToKill.close();
+        }
     }
 }
 function close(client) {
