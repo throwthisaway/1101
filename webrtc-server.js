@@ -95,8 +95,8 @@ app.get(rootPath + '/main.data', function (req, res) {
     res.setHeader('Content-Type', 'application/octet-stream');
     res.sendFile(__dirname + '/emc_ogl/main.data.gz');
 });
-app.get('/thumbnail4.png', function (req, res) {
-    res.sendFile(__dirname + '/thumbnail4.png');
+app.get('/thumbnail5.jpg', function (req, res) {
+    res.sendFile(__dirname + '/thumbnail5.jpg');
 });
 function applyMixins(derivedCtor, baseCtors) {
     baseCtors.forEach(baseCtor => {
