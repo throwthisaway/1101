@@ -13,6 +13,7 @@ let sessionIDLen = 5, clientIDLen = 5, minPlayers = 4, maxPlayers = 16, maxSessi
 let RTCClients = new Map();
 let sessions = new Map();
 // session handling
+Express.static.mime.define({'application/wasm': ['wasm']});
 function getSessionIDFromMsg(msg) {
     if (msg.length < 4 + sessionIDLen)
         return undefined;
