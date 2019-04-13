@@ -3,8 +3,8 @@ const Session_1 = require("./Session");
 const Express = require('express');
 const utils = require('./utils');
 let http = require('http');
-let ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-let port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+let ipaddress = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+let port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 let app = Express();
 let server = http.createServer(app);
 let debug = new utils.Debug(false, false);
@@ -272,5 +272,5 @@ wss.on('connection', function (ws) {
     });
 });
 server.listen(port, ipaddress, function () {
-    console.log((new Date()) + ' Server is listening on port ' + port);
+    console.log((new Date()) + ' Server is listening on' + ipaddress + ':' + port);
 });
