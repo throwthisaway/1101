@@ -86,10 +86,10 @@ app.get(rootPath + '/main.js', function (req, res) {
     res.setHeader('Content-Type', 'application/javascript');
     res.sendFile(__dirname + '/emc_ogl/main.js.gz');
 });
-app.get(rootPath + '/main.js.mem', function (req, res) {
+app.get(rootPath + '/main.wasm', function (req, res) {
     res.setHeader('Content-Encoding', 'gzip');
     res.setHeader('Content-Type', 'application/octet-stream');
-    res.sendFile(__dirname + '/emc_ogl/main.js.mem.gz');
+    res.sendFile(__dirname + '/emc_ogl/main.wasm.gz');
 });
 app.get(rootPath + '/main.data', function (req, res) {
     res.setHeader('Content-Encoding', 'gzip');
@@ -272,5 +272,5 @@ wss.on('connection', function (ws) {
     });
 });
 server.listen(port, ipaddress, function () {
-    console.log((new Date()) + ' Server is listening on' + ipaddress + ':' + port);
+    console.log((new Date()) + ' Server is listening on ' + ipaddress + ':' + port);
 });
