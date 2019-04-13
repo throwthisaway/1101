@@ -182,15 +182,6 @@ function close(client) {
 // {'answer': {'targetID': '7fea5','sdp': '...'}}
 // {'targetID': '8e9c3', 'originID': originID, 'candidate': '...'}}
 let wss;
-// if (ipaddress === "127.0.0.1") {
-//     wss = new WS.Server({
-//         server: server,
-//         port: 8000 });
-// } else {
-//     wss = new WS.Server({
-//         server: server
-//     });
-// }
 wss = new Session_1.WS.Server({
     server: server
 });
