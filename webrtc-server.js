@@ -89,7 +89,7 @@ app.get(rootPath + '/main.js', function (req, res) {
 });
 app.get(rootPath + '/main.wasm', function (req, res) {
     res.setHeader('Content-Encoding', 'gzip');
-    res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Type', 'application/wasm');
     res.sendFile(__dirname + '/emc_ogl/main.wasm.gz');
 });
 app.get(rootPath + '/main.data', function (req, res) {
